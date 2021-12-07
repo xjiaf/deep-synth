@@ -125,11 +125,16 @@ class Simulator:
 
     def add_mesh(self, obj_id, obj_file, transform, vis_mesh_file=None, static=False):
         if static:
-            cid = p.createCollisionShape(p.GEOM_MESH, fileName=obj_file, meshScale=transform.scale,
-                                         flags=p.GEOM_FORCE_CONCAVE_TRIMESH, physicsClientId=self._pid)
+            print('debug-----------------',obj_file, p.GEOM_FORCE_CONCAVE_TRIMESH,transform.scale,self._pid)
+            # cid = p.createCollisionShape(p.GEOM_MESH, fileName=obj_file ,flags=p.GEOM_FORCE_CONCAVE_TRIMESH, meshScale=transform.scale,
+            #                              physicsClientId=self._pid) # 
+            cid = 1
         else:
-            cid = p.createCollisionShape(p.GEOM_MESH, fileName=obj_file, meshScale=transform.scale,
-                                         physicsClientId=self._pid)
+            print('debug+++++++++++++++++', p.GEOM_MESH, obj_file, transform.scale,
+                                         self._pid)
+            # cid = p.createCollisionShape(p.GEOM_MESH, fileName=obj_file, meshScale=transform.scale,
+            #                              physicsClientId=self._pid)
+            cid = 1
         vid = -1
         if vis_mesh_file:
             vid = p.createVisualShape(p.GEOM_MESH, fileName=vis_mesh_file, meshScale=transform.scale,

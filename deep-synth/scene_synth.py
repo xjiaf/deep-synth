@@ -15,6 +15,7 @@ import copy
 from model_prior import *
 from priors.observations import ObjectCollection
 from utils import stdout_redirected
+import cv2
 
 class SceneSynth():
     """
@@ -581,12 +582,14 @@ class SynthedRoom():
             and include number of failures, to be processed by other scripts
         """
         current_room = self.composite.get_composite(num_extra_channels=0)
-        img = m.toimage(current_room[3].numpy(), cmin=0, cmax=1)
+        # img = m.toimage(current_room[3].numpy(), cmin=0, cmax=1)
         if final:
-            img.save(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}_final_{self.failures}.png")
+            # img.save(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}_final_{self.failures}.png")
+            cv2.imwrite(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}_final_{self.failures}.png", current_room[3].numpy()) # @japhen
         else:
-            img.save(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}.png")
-    
+            # img.save(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}.png")
+            cv2.imwrite(f"{save_dir}/{self.room_id}_{self.trial}_{len(self.object_nodes)}.png", current_room[3].numpy()) # @japhen
+        
     def _create_empty_house_json(self):
         #Preprocess a json containing only the empty ROOM (oops I named the method wrong)
         #Since this is constant across the entire synthesis process

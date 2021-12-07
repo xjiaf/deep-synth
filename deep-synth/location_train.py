@@ -29,7 +29,11 @@ save_dir = args.save_dir
 utils.ensuredir(save_dir)
 batch_size = 16
 
-with open(f"data/{args.data_dir}/final_categories_frequency", "r") as f:
+# with open(f"data/{args.data_dir}/final_categories_frequency", "r") as f:
+#     lines = f.readlines()
+# num_categories = len(lines)-2
+data_root_dir = utils.get_data_root_dir()
+with open(f"{data_root_dir}/{args.data_dir}/final_categories_frequency", "r") as f:
     lines = f.readlines()
 num_categories = len(lines)-2
 

@@ -24,7 +24,7 @@ parser.add_argument('--save-dir', type=str, default="train/bedroom", metavar='S'
 parser.add_argument('--ablation', type=str, default=None, metavar='S')
 parser.add_argument('--lr', type=float, default=0.001, metavar='N')
 parser.add_argument('--eps', type=float, default=1e-6, metavar='N')
-parser.add_argument('--use-count', action='store_true', default=False)
+parser.add_argument('--use-count', action='store_true', default=False) # @japhen False
 args = parser.parse_args()
 
 save_dir = args.save_dir
@@ -32,7 +32,8 @@ utils.ensuredir(save_dir)
 learning_rate = args.lr
 batch_size = 16
 
-with open(f"data/{args.data_dir}/final_categories_frequency", "r") as f:
+data_root_dir = utils.get_data_root_dir()
+with open(f"{data_root_dir}/{args.data_dir}/final_categories_frequency", "r") as f:
     lines = f.readlines()
 num_categories = len(lines)-2
 
@@ -134,7 +135,8 @@ LOG(f'=========================== Epoch {current_epoch} ========================
 def train():
     global num_seen, current_epoch
     for batch_idx, (data, target, existing) in enumerate(train_loader):
-        data, target = data.cuda(), target.cuda()
+        # data, target = data.cuda(), target.cuda()
+        data, target = data.cuda(), (target*1).cuda()
 
         if args.use_count:
             existing = existing.cuda()
@@ -147,6 +149,7 @@ def train():
             output = fc(o_conv)
         else:
             output = model(data)
+        print(output)
 
         loss_val = loss(output, target)
         loss_val.backward()
@@ -176,7 +179,8 @@ def validate():
     total_accuracy = 0
     for _, (data, target, existing) in enumerate(validation_loader):
         with torch.no_grad():
-            data, target = data.cuda(), target.cuda()
+            # data, target = data.cuda(), target.cuda()
+            data, target = data.cuda(), (target*1).cuda()
             if args.use_count:
                 existing = existing.cuda()
                 existing = Variable(existing)

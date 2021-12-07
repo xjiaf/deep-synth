@@ -13,6 +13,7 @@ import scipy.misc as m
 import copy
 import utils
 import numpy as np
+import cv2
 
 def create_dataset(source="SUNCG", dest="main", \
                    num_houses=-1, batch_size=1000):
@@ -185,9 +186,10 @@ class DatasetRenderer(DatasetAction):
                     img, data = self.renderer.render(room)
                     with open(f"{self.dest_dir}/{self.count}.pkl","wb") as f:
                         pickle.dump((data, room), f, pickle.HIGHEST_PROTOCOL)
-
-                    img = m.toimage(img, cmin=0, cmax=1)
-                    img.save(f"{self.dest_dir}/{self.count}.jpg")
+                    
+                    cv2.imwrite(f"{self.dest_dir}/{self.count}.jpg", img) # @japhen
+                    # img = m.toimage(img, cmin=0, cmax=1)
+                    # img.save(f"{self.dest_dir}/{self.count}.jpg")
                     print(f"Rendering room {self.count}...", end="\r")
                     self.count += 1
             yield house

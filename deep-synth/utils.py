@@ -44,19 +44,27 @@ def pickle_load_compressed(filename):
     file.close()
     return object
 
+# def get_data_root_dir():
+#     """
+#     Gets the root dir of the dataset
+#     Check env variable first,
+#     if not set, use the {code_location}/data
+#     """
+#     env_path = os.environ.get("SCENESYNTH_DATA_PATH")
+#     if env_path:
+#     #if False: #Debug purposes
+#         return env_path
+#     else:
+#         root_dir = os.path.dirname(os.path.abspath(__file__))
+#         return f"{root_dir}/data"
+
 def get_data_root_dir():
     """
     Gets the root dir of the dataset
     Check env variable first,
     if not set, use the {code_location}/data
     """
-    env_path = os.environ.get("SCENESYNTH_DATA_PATH")
-    if env_path:
-    #if False: #Debug purposes
-        return env_path
-    else:
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        return f"{root_dir}/data"
+    return "/root/soft-design"
 
 @contextmanager
 def stdout_redirected(to=os.devnull):
