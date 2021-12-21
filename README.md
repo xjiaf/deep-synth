@@ -129,7 +129,7 @@ First download and build the [SSTK](https://github.com/smartscenes/sstk) library
 #!/usr/bin/env bash
 
 SSTK="${HOME}/code/sstk/"  # base directory of the SSTK library
-CFG="${SSTK}/ssc/config/render_suncg.json  # configuration file
+CFG="${SSTK}/ssc/config/render.json  # configuration file
 INPUT_JSON="${HOME}/Dropbox/fuzzybox/1.json"  # input .json file
 
 # Render regular colors
