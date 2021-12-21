@@ -10,7 +10,25 @@ pip install -r requirements.txt
 to install.
 
 ## Creating the Dataset
-Current unavailable.
+To create the dataset, first obtain a copy of the [original SUNCG Dataset](http://suncg.cs.princeton.edu/) by signing the agreement form. The dataset should come in the form of a download script, say with the name `script.py`. 
+Run 
+```bash
+python script.py
+```
+to download the newest version of the dataset, extract `house`, `object` and `texture`. Those should be the only files required. 
+In addition, run 
+```bash
+python script.py --version v1 --type room
+```
+to download the room geometry in obj format, extract that as well.
+
+Now, create a directory named `suncg_data` under the data root directory. This defaults to `/deep-synth/data`, but could be changed by exporting an environment variable named `SCENESYNTH_DATA_PATH`. Move the four directories downloaded previously to `suncg_data`.
+
+Now, navigate to `/deep-synth`, and run
+```bash
+python create_data.py
+```
+To convert SUNCG into the format used by our code. This should create several new directories under the data root directory, the only important ones are `bedroom`, `living` and `office`, which are the datasets for the three types of rooms we include in the paper. Since the SUNCG version is newer than what we used, there might be minor discrepancies.
 
 ## Training the Models
 We provide three training scripts: `continue_train.py`, `location_train.py` and `rotation_train.py` that trains each of the three neural network components. The neural networks are described in detail in section 5 of our paper.
@@ -111,7 +129,7 @@ First download and build the [SSTK](https://github.com/smartscenes/sstk) library
 #!/usr/bin/env bash
 
 SSTK="${HOME}/code/sstk/"  # base directory of the SSTK library
-CFG="${SSTK}/ssc/config/render.json"  # configuration file
+CFG="${SSTK}/ssc/config/render_suncg.json  # configuration file
 INPUT_JSON="${HOME}/Dropbox/fuzzybox/1.json"  # input .json file
 
 # Render regular colors
