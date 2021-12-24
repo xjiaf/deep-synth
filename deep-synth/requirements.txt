@@ -5,4 +5,3 @@ pybullet>=1.7.5
 pyquaternion
 scikit-learn
 scipy
-opencv-python
