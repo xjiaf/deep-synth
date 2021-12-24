@@ -13,7 +13,7 @@ import scipy.misc as m
 import copy
 import utils
 import numpy as np
-import cv2
+from matplotlib import image
 
 def create_dataset(source="SUNCG", dest="main", \
                    num_houses=-1, batch_size=1000):
@@ -187,7 +187,8 @@ class DatasetRenderer(DatasetAction):
                     with open(f"{self.dest_dir}/{self.count}.pkl","wb") as f:
                         pickle.dump((data, room), f, pickle.HIGHEST_PROTOCOL)
                     
-                    cv2.imwrite(f"{self.dest_dir}/{self.count}.jpg", img) # @japhen
+                    # cv2.imwrite(f"{self.dest_dir}/{self.count}.jpg", img) # 经过测试。此方案生成的图片为纯黑。
+                    image.imsave(f"{self.dest_dir}/{self.count}.jpg", img, cmap='gray')  # 方案2 使用matplotlib
                     # img = m.toimage(img, cmin=0, cmax=1)
                     # img.save(f"{self.dest_dir}/{self.count}.jpg")
                     print(f"Rendering room {self.count}...", end="\r")
